@@ -356,6 +356,74 @@ Trabajo solo con cita previa para dedicar el tiempo necesario a cada paciente, s
     
 
     <!-- start cta -->
+     <section id="formulario" class="bg-gray-100 py-20">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h2 class="text-4xl font-bold text-gray-800">Agenda tu <span class="text-teal-500">Cita</span></h2>
+      <p class="text-lg text-gray-600 mt-4">¿Listo para transformar tu sonrisa? Completa el formulario y te contactaremos vía WhatsApp.</p>
+    </div>
+    <form id="contactForm" class="bg-white p-8 rounded-lg shadow-lg space-y-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label for="name" class="block text-sm font-medium text-gray-700">Nombre completo *</label>
+          <input type="text" id="name" name="name" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500">
+        </div>
+        <div>
+          <label for="phone" class="block text-sm font-medium text-gray-700">Teléfono *</label>
+          <input type="tel" id="phone" name="phone" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500">
+        </div>
+      </div>
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-700">Correo electrónico</label>
+        <input type="email" id="email" name="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500">
+      </div>
+      <div>
+        <label for="service" class="block text-sm font-medium text-gray-700">Tratamiento de interés *</label>
+        <select id="service" name="service" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500">
+          <option value="">Selecciona un tratamiento</option>
+          <option value="limpieza">Limpieza Dental</option>
+          <option value="blanqueamiento">Blanqueamiento Dental</option>
+          <option value="empastes">Empastes Estéticos</option>
+          <option value="coronas">Coronas de Porcelana</option>
+          <option value="implantes">Implantes Dentales</option>
+          <option value="ortodoncia">Ortodoncia</option>
+          <option value="endodoncia">Endodoncia</option>
+          <option value="extraccion">Extracción Simple</option>
+          <option value="protesis">Prótesis Dentales</option>
+          <option value="consulta">Consulta General</option>
+        </select>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label for="date" class="block text-sm font-medium text-gray-700">Fecha preferida</label>
+          <input type="date" id="date" name="date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500">
+        </div>
+        <div>
+          <label for="time" class="block text-sm font-medium text-gray-700">Hora preferida</label>
+          <select id="time" name="time" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500">
+            <option value="">Selecciona una hora</option>
+            <option value="9:00">9:00 AM</option>
+            <option value="10:00">10:00 AM</option>
+            <option value="11:00">11:00 AM</option>
+            <option value="12:00">12:00 PM</option>
+            <option value="14:00">2:00 PM</option>
+            <option value="15:00">3:00 PM</option>
+            <option value="16:00">4:00 PM</option>
+            <option value="17:00">5:00 PM</option>
+            <option value="18:00">6:00 PM</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <label for="message" class="block text-sm font-medium text-gray-700">Mensaje adicional</label>
+        <textarea id="message" name="message" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500"></textarea>
+      </div>
+      <button type="submit" class="w-full bg-teal-500 hover:bg-teal-600 text-white font-bold py-4 px-6 rounded-lg shadow-md transition duration-300">
+        Continuar en WhatsApp
+      </button>
+    </form>
+  </div>
+</section>
     <section id="contacto"
       class="relative bg-blue-teal-gradient px-4 sm:px-8 lg:px-16 xl:px-40 2xl:px-64 py-12 text-center md:text-left">
       <div class="md:flex md:items-center md:justify-center">
