@@ -21,7 +21,6 @@ Mensaje adicional: ${message || 'Ninguno'}. ¡Quedo a la espera de su respuesta!
       const whatsappNumber = "593992593659"; 
       const encodedMessage = encodeURIComponent(finalMessage);
       const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-
       window.open(whatsappUrl, '_blank');
       alert("Te hemos redirigido a WhatsApp para completar tu cita.");
     });
