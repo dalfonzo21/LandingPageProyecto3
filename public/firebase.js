@@ -1,69 +1,52 @@
 // Importa las funciones necesarias de Firebase
-import { initializeApp } from "firebase/app";
-import { getDatabase } from "firebase/database";
-
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+import {  getDatabase, ref, set, push, get} from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
 // Configuración de Firebase usando variables de entorno de Vite
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
-};
+    apiKey: "AIzaSyBq6U64eSUVsThyufjdgVssuOWmCsVxDFk",
+    authDomain: "landing-proy.firebaseapp.com",
+    projectId: "landing-proy",
+    storageBucket: "landing-proy.firebasestorage.app",
+    messagingSenderId: "412055312577",
+    appId: "1:412055312577:web:d28e4dfa7e4c03e43adc40",
+    measurementId: "G-SK6960FJFN"
+  };
 
-// Inicializa la aplicación de Firebase
+// Inicializar la aplicación de Firebase
 const app = initializeApp(firebaseConfig);
 
-// Obtiene la referencia a la base de datos en tiempo real
+// Obtener referencia a la base de datos en tiempo real
 const database = getDatabase(app);
 
-const form = document.getElementById("contactForm");
-
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const nombre = form.name.value;
-    const telefono = form.phone.value;
-    const correo = form.email.value;
-    const tratamiento = form.service.value;
-    const fecha = form.date.value;
-    const hora = form.time.value;
-    const mensaje = form.message.value;
-
-    if (!fecha || !hora) {
-      alert("Debes seleccionar fecha y hora");
-      return;
+async function existeCita(fecha, hora) {
+  try {
+    const citasRef = ref(database, 'citas');
+    const snapshot = await get(citasRef);
+    
+    if (snapshot.exists()) {
+      const citas = snapshot.val();
+      // Buscar si existe una cita con la misma fecha y hora
+      for (let id in citas) {
+        if (citas[id].fecha === fecha && citas[id].hora === hora) {
+          return true;
+        }
+      }
     }
+    return false;
+  } catch (error) {
+    throw new Error("Error verificando cita: " + error.message);
+  }
+}
 
-    // Verificar si ya existe una cita en la misma fecha y hora
-    const citasRef = collection(db, "citas");
-    const q = query(citasRef, where("fecha", "==", fecha), where("hora", "==", hora));
-    const querySnapshot = await getDocs(q);
+async function guardarCita(cita) {
+  try {
+    const citasRef = ref(database, 'citas');
+    const nuevaCitaRef = push(citasRef);
+    await set(nuevaCitaRef, cita);
+    return nuevaCitaRef.key;
+  } catch (error) {
+    throw new Error("Error guardando cita: " + error.message);
+  }
+}
 
-    if (!querySnapshot.empty) {
-      alert("Lo sentimos, ya hay una cita agendada para esa fecha y hora.");
-      return;
-    }
-
-    // Guardar la cita
-    try {
-      await addDoc(citasRef, {
-        nombre,
-        telefono,
-        correo,
-        tratamiento,
-        fecha,
-        hora,
-        mensaje
-      });
-      alert("¡Tu cita ha sido agendada con éxito!");
-      form.reset();
-    } catch (error) {
-      console.error("Error al guardar la cita:", error);
-      alert("Ocurrió un error al agendar tu cita. Intenta nuevamente.");
-    }
-  });
-
-export { app, database };
+export { existeCita, guardarCita, getDatabase, database };

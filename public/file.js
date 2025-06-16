@@ -1,4 +1,6 @@
 "use strict";
+import { existeCita, guardarCita} from './firebase.js';
+/*
 document.getElementById('contactForm').addEventListener('submit', function (e) {
       e.preventDefault();
 
@@ -25,7 +27,7 @@ Mensaje adicional: ${message || 'Ninguno'}. ¡Quedo a la espera de su respuesta!
       alert("Te hemos redirigido a WhatsApp para completar tu cita.");
     });
 
-
+*/
     document.addEventListener('DOMContentLoaded', () => {
   // Selecciona todos los botones de reserva
   const botones = document.querySelectorAll('.reservar-btn');
@@ -65,4 +67,54 @@ document.addEventListener('DOMContentLoaded', () => {
       mensajeError.classList.add('hidden');
     }
   });
+});
+
+
+
+const form = document.getElementById('contactForm');
+const estado = document.getElementById('estadoCita');
+const whatsappBtn = document.getElementById('whatsappBtn');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const formData = new FormData(form);
+  const cita = {
+    name: formData.get('name'),
+    phone: formData.get('phone'),
+    email: formData.get('email'),
+    service: formData.get('service'),
+    fecha: formData.get('date'),
+    hora: formData.get('time'),
+    message: formData.get('message')
+  };
+
+  if (!cita.fecha || !cita.hora) {
+    estado.textContent = "Por favor, selecciona fecha y hora.";
+    whatsappBtn.classList.add('hidden');
+    return;
+  }
+
+  try {
+    const yaExiste = await existeCita(cita.fecha, cita.hora);
+    if (yaExiste) {
+      estado.textContent = "El horario seleccionado ya está ocupado. Por favor elige otro.";
+      whatsappBtn.classList.add('hidden');
+      return;
+    }
+
+    const id = await guardarCita(cita);
+    estado.textContent = "¡Cita agendada con éxito!";
+
+    const mensajeWhats = encodeURIComponent(
+      `Hola, quiero confirmar mi cita:\nNombre: ${cita.name}\nFecha: ${cita.fecha}\nHora: ${cita.hora}\nServicio: ${cita.service}`
+    );
+    whatsappBtn.href = `https://wa.me/593992593659?text=${mensajeWhats}`;
+    whatsappBtn.classList.remove('hidden');
+
+    form.reset();
+  } catch (error) {
+    estado.textContent = "Error al agendar la cita: " + error.message;
+    whatsappBtn.classList.add('hidden');
+  }
 });
