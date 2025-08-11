@@ -4,14 +4,15 @@ import {  getDatabase, ref, set, push, get} from "https://www.gstatic.com/fireba
 import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
 // Configuración de Firebase usando variables de entorno de Vite
 const firebaseConfig = {
-    apiKey: "AIzaSyBq6U64eSUVsThyufjdgVssuOWmCsVxDFk",
-    authDomain: "landing-proy.firebaseapp.com",
-    projectId: "landing-proy",
-    storageBucket: "landing-proy.firebasestorage.app",
-    messagingSenderId: "412055312577",
-    appId: "1:412055312577:web:d28e4dfa7e4c03e43adc40",
-    measurementId: "G-SK6960FJFN"
-  };
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID,
+  measurementId: process.env.REACT_APP_MEASUREMENT_ID
+};
+
 
 // Inicializar la aplicación de Firebase
 const app = initializeApp(firebaseConfig);
