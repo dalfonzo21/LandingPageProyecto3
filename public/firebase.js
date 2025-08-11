@@ -1,6 +1,7 @@
 // Importa las funciones necesarias de Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
 import {  getDatabase, ref, set, push, get} from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
+import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
 // Configuración de Firebase usando variables de entorno de Vite
 const firebaseConfig = {
     apiKey: "AIzaSyBq6U64eSUVsThyufjdgVssuOWmCsVxDFk",
@@ -17,6 +18,18 @@ const app = initializeApp(firebaseConfig);
 
 // Obtener referencia a la base de datos en tiempo real
 const database = getDatabase(app);
+
+// Inicializar autenticación
+const auth = getAuth(app);
+
+// Iniciar sesión anónima automáticamente
+signInAnonymously(auth)
+  .then(() => {
+    console.log("Usuario anónimo autenticado");
+  })
+  .catch((error) => {
+    console.error("Error en autenticación anónima:", error);
+  });
 
 async function existeCita(fecha, hora) {
   try {
